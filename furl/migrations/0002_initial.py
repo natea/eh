@@ -7,46 +7,10 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
-        # Adding model 'Furl'
-        db.create_table('furl_furl', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('owner', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('url', self.gf('django.db.models.fields.URLField')(max_length=200)),
-            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('html', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('date_added', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal('furl', ['Furl'])
-
-        # Adding model 'Tag'
-        db.create_table('furl_tag', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-        ))
-        db.send_create_signal('furl', ['Tag'])
-
-        # Adding M2M table for field urls on 'Tag'
-        db.create_table('furl_tag_urls', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('tag', models.ForeignKey(orm['furl.tag'], null=False)),
-            ('furl', models.ForeignKey(orm['furl.furl'], null=False))
-        ))
-        db.create_unique('furl_tag_urls', ['tag_id', 'furl_id'])
-
+        pass
 
     def backwards(self, orm):
-        
-        # Deleting model 'Furl'
-        db.delete_table('furl_furl')
-
-        # Deleting model 'Tag'
-        db.delete_table('furl_tag')
-
-        # Removing M2M table for field urls on 'Tag'
-        db.delete_table('furl_tag_urls')
-
+        pass
 
     models = {
         'auth.group': {
