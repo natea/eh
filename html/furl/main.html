@@ -1,0 +1,33 @@
+{% extends "furl/base_furl.html" %}
+        {%block title %}Furled links{% endblock %}
+
+
+{% block body %}
+{% if description == "All furls" %}
+	<A HREF="/{{FURL_ROOT}}/extras" style="float:right;padding:1em;">Install bookmarklet</A>
+{% else %}
+	<A HREF="/{{FURL_ROOT}}" style="float:right;padding:1em;">All furls</A>
+{% endif %}
+
+<div id="content"> 
+<h1>{{ description }}</h1>
+
+    <table>
+		<tr>
+			<th width="50%">Title</th>
+			<th width="25%">Tags</th>
+			<th width="25%">Date added</th>
+		</tr>
+		{% for f in furls %}
+		<tr>
+			<td><A HREF="{{f.url}}">{{f.title}}</A></td>
+			<td>{%for t in f.tag_set.all %}
+				<A HREF="/{{FURL_ROOT}}/tag/{{t.name}}">{{t.name}}</A> 
+				{% endfor %}
+			</td>
+			<td>{{f.date_added}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>	
+{% endblock %}

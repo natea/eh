@@ -1,0 +1,12 @@
+{% extends "furl/base_furl.html" %}
+        {%block title %}Extras{% endblock %}
+
+
+{% block body %}
+<div id="content">
+<h1>Load extra goodies here</h1>
+<p>Drag this <A HREF="javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://{{request.META.SERVER_NAME}}/{{FURL_ROOT}}/adder';})();" title="Save">Save..</A> bookmarklet your bookmarks bar</p>
+<p>Back to <A HREF="/{{FURL_ROOT}}">All furls</A></p>
+</div>
+
+{% endblock %}

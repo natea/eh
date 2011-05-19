@@ -1,0 +1,113 @@
+<HTML>
+	<HEAD>
+		<title>Adder top div bar</title>
+			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js" ></script>
+		<style>
+			body {
+					padding-top: 10px;
+			    	background:#71f300;
+				    border:0;
+				    text-decoration:none;
+				    font-family:Helvetica;
+					font-size: 16px;
+					color: #FFFFFF;
+					}
+			a { color: #f35021;}
+
+			input{
+				font-size: 16px;
+				font-family: "American Typewriter", courier;
+			}
+			.button{
+				float: right;
+			    background-color:#ffffff;
+			    border:1px solid #71f300;
+			    border-top:1px solid #eee;
+			    border-left:1px solid #eee;    
+				font-family:"Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
+			    text-decoration:none;
+				font-size: 16px;
+			    font-weight:bold;
+			    color:#71f300;
+			    cursor:pointer;
+			    padding:5px;
+				margin-right: 10px;
+			}
+			a:hover, .button:hover {
+				background-color:#ddeeee;
+			}
+			#msg {
+				position: absolute;
+				left: 50%;
+				top:10%;
+				display: none;
+				background-color: #71f300;
+				color: #134e8a;
+				font-weight:bold;
+				padding: 0.25em;
+				margin-left: 100px;
+				margin-top: 2em	;
+				
+				
+			}
+		</style>
+		
+		<script>
+			function postIt() {
+				// post the contents to the server to retain the link
+				var t = $("#title").val();
+				var u = $("#url").val();
+				var tags = $("#tags").val();
+				// console.log("Going to post: [title: " + t + " url: " + u + " tags: " + tags + " ]");
+				var d = {title: t, url: u, tags: tags, csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val()};
+				$.post('/{{FURL_ROOT}}/add',
+				 		d,
+						postedIt);
+				
+			}
+			function postedIt(data) {
+				// console.log("server gave me back: " + data);
+				$("#msg").html(data).show().fadeOut(750);
+				$("#tags").val("");
+				$("#title").val("");
+			}
+			
+			function insertTag(el) {
+				console.log('here is the tag: ' + el.innerHTML());
+			}
+			function testSubmit(event) {
+				if (event.which == '13') {
+					postIt();
+			    	event.preventDefault();
+			   } 
+			}
+			$(document).ready(function() {
+				$("#tags").keypress(testSubmit);
+				$("#tags").focus();
+				$(".button").click(postIt);
+				
+			});
+			
+			// $("#adder").click(liu);
+		</script>
+	</HEAD>
+		
+	<BODY>
+
+						Title:<input type="text" id="title" value="{{request.GET.title|safe}}" size="40"/> 
+						<input type="hidden" id="url" value="{{request.GET.url}}">
+						
+						{% csrf_token %}
+				
+				
+						Tags: <input type="text" id="tags" size="20"/>
+				{%comment %}		
+						<input type="button" class="button" name="Save" value="Save">
+				{%endcomment%}	
+				<A HREF="http://{{request.META.SERVER_NAME}}:{{request.META.SERVER_PORT}}/{{FURL_ROOT}}" target="_main" style="float:right;margin-right:1em;color:#FFFFFF;text-decoration:none">furl</A>	
+				
+			<div id="msg">This is a message!</div>
+	</BODY>
+</HTML>
+
+
